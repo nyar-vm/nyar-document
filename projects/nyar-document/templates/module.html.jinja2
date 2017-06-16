@@ -13,3 +13,18 @@
 </li>
 {% endfor %}
 </ul>
+
+
+<h2 id="modules" class="small-section-header">
+    <a href="#interfaces">Interfaces</a>
+</h2>
+<ul class="item-table"></ul>
+{% for interface in interfaces %}
+<li>
+    <div class="item-name">
+        <a class="type-module" href="filters/index.html" title="modio::comments::filters">{{ interface.get_name() }}</a>
+    </div>
+    <div class="desc docblock-short">{{ interface.get_summary() }}</div>
+</li>
+{% endfor %}
+</ul>

@@ -1,5 +1,6 @@
 use std::ops::AddAssign;
 use askama::Template;
+use crate::{DocumentInterface, DocumentStructure, DocumentType};
 
 #[derive(Debug, Template)]
 #[template(path = "module.html.jinja2")]
@@ -40,24 +41,8 @@ impl AddAssign<DocumentModule> for DocumentModule {
     }
 }
 
-
-#[derive(Debug)]
-pub struct DocumentType {
-    namepath: Vec<String>,
-    /// html summary
-    summary: String,
-}
-
-#[derive(Debug)]
-pub struct DocumentInterface {
-    namepath: Vec<String>,
-    /// html summary
-    summary: String,
-}
-
-#[derive(Debug)]
-pub struct DocumentStructure {
-    namepath: Vec<String>,
-    /// html summary
-    summary: String,
+impl AddAssign<DocumentInterface> for DocumentModule {
+    fn add_assign(&mut self, rhs: DocumentInterface) {
+        self.interfaces.push(rhs);
+    }
 }
