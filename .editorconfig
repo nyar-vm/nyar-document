@@ -2,7 +2,8 @@
 charset = utf-8
 
 
-[*.pest]
+[*.jinja2]
+max_line_length = 9999
 indent_style = space
 indent_size = 4
 
