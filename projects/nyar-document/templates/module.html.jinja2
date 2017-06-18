@@ -1,8 +1,10 @@
+{{ self.summary }}
+
+
+{% if self.has_module() %}
 <h2 id="modules" class="small-section-header">
     <a href="#modules">Modules</a>
 </h2>
-
-
 <ul class="item-table"></ul>
 {% for module in modules %}
 <li>
@@ -13,8 +15,12 @@
 </li>
 {% endfor %}
 </ul>
+{% endif %}
 
 
+
+
+{% if self.has_interface() %}
 <h2 id="interfaces" class="small-section-header">
     <a href="#interfaces">Interfaces</a>
 </h2>
@@ -30,7 +36,12 @@
 </li>
 {% endfor %}
 </ul>
+{% endif %}
 
+
+
+
+{% if self.has_structure() %}
 <h2 id="structures" class="small-section-header">
     <a href="#structures">Structures</a>
 </h2>
@@ -46,6 +57,7 @@
 </li>
 {% endfor %}
 </ul>
+{% endif %}
 
 <style>
     .type {

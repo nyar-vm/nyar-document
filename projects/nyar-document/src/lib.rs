@@ -9,6 +9,11 @@ mod modules;
 mod types;
 mod interfaces;
 mod structures;
+mod variants;
+mod enumerations;
+mod unions;
+mod unites;
+mod flags;
 
 pub use crate::errors::{Error, Result};
 pub use crate::modules::{DocumentModule};

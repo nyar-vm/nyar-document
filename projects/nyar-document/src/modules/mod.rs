@@ -33,6 +33,16 @@ impl DocumentModule {
             ..self
         }
     }
+    pub fn has_module(&self) -> bool {
+        !self.modules.is_empty()
+    }
+    pub fn has_interface(&self) -> bool {
+        !self.interfaces.is_empty()
+    }
+
+    pub fn has_structure(&self) -> bool {
+        !self.structures.is_empty()
+    }
 }
 
 impl AddAssign<DocumentModule> for DocumentModule {
