@@ -5,20 +5,14 @@
 #![doc(html_favicon_url = "https://raw.githubusercontent.com/oovm/shape-rs/dev/projects/images/Trapezohedron.svg")]
 
 mod errors;
-mod modules;
-mod types;
-mod interfaces;
-mod structures;
-mod variants;
-mod enumerations;
-mod unions;
-mod unites;
-mod flags;
+
+mod pages;
+mod traits;
 
 pub use crate::errors::{Error, Result};
-pub use crate::modules::{DocumentModule};
-pub use crate::types::{DocumentType};
-pub use crate::interfaces::{DocumentInterface};
-pub use crate::structures::{DocumentStructure};
-
+pub use crate::pages::modules::{DocumentModule};
+pub use crate::pages::types::{DocumentType};
+pub use crate::pages::interfaces::{DocumentInterface};
+pub use crate::pages::structures::{DocumentStructure};
+pub use crate::traits::PagedElement;
 
