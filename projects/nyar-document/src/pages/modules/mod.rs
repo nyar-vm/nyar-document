@@ -19,8 +19,8 @@ pub struct DocumentModule {
 
 impl PagedElement for DocumentModule
 {
-    fn new<S: ToString>(name: S) -> Arc<Self> {
-        Arc::new(Self {
+    fn new<S: ToString>(name: S) -> Self {
+        Self {
             namespace: vec![],
             name: name.to_string(),
             summary: "".to_string(),
@@ -28,11 +28,27 @@ impl PagedElement for DocumentModule
             types: vec![],
             interfaces: vec![],
             structures: vec![],
-        })
+        }
     }
 
     fn set_summary<S: ToString>(&mut self, summary: S) {
         self.summary = summary.to_string()
+    }
+
+    fn get_name(&self) -> &str {
+        self.name.as_str()
+    }
+
+    fn get_namespace(&self) -> &[String] {
+        self.namespace.as_slice()
+    }
+
+    fn set_namespace(&mut self, namepath: Vec<String>) {
+        self.namespace = namepath
+    }
+
+    fn get_summary(&self) -> &str {
+        self.summary.as_str()
     }
 }
 

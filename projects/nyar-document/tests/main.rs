@@ -1,6 +1,6 @@
 use std::fs::File;
 use std::io::Write;
-use nyar_document::{DocumentInterface, DocumentModule, DocumentStructure};
+use nyar_document::{DocumentInterface, DocumentModule, DocumentStructure, PagesManager};
 use askama::Template;
 use nyar_document::PagedElement;
 
@@ -12,23 +12,25 @@ fn ready() {
 
 #[test]
 fn main() {
-    let mut hello = DocumentModule::new("io"); // instantiate your struct
+    let mut mmg = PagesManager::default();
+
+
     let mut new1 = DocumentModule::new("new1");
     new1.set_summary("new1");
-    let new2 = DocumentModule::new("new2");
-    let new3 = DocumentModule::new("new3");
-    hello += new1;
-    hello += new2;
-    hello += new3;
+    new1.set_namespace(vec![ "std".to_string(), "io".to_string()]);
+    let new1 = mmg.register_module(new1);
 
-    // let interface = DocumentInterface::new("Show").with_summary("show interface");
-    // hello += interface;
-    //
-    // let s1 = DocumentStructure::new("Class1").with_summary("s1");
-    // let s2 = DocumentStructure::new("Class2").with_summary("s2");
-    // hello += s1;
-    // hello += s2;
-    std::fs::create_dir_all("target/std").unwrap();
-    let mut out = File::create("target/std/io.html").unwrap();
-    out.write_all(hello.render().unwrap().as_bytes()).unwrap();
+    let mut new2 = DocumentModule::new("new2");
+    new2.set_summary("new2");
+    new2.set_namespace(vec![ "std".to_string(), "io".to_string()]);
+    let new2 = mmg.register_module(new2);
+
+    let mut io = DocumentModule::new("io");
+    io.set_summary("io");
+    io.set_namespace(vec!["std".to_string()]);
+    io += new1;
+    io += new2;
+    let io = mmg.register_module(io);
+
+    mmg.export("target").unwrap();
 }

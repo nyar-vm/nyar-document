@@ -16,3 +16,4 @@ pub use crate::pages::interfaces::{DocumentInterface};
 pub use crate::pages::structures::{DocumentStructure};
 pub use crate::traits::PagedElement;
 
+pub use crate::pages::PagesManager;
