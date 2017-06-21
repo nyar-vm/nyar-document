@@ -1,4 +1,7 @@
-#[derive(Debug)]
+use super::*;
+
+#[derive(Debug, Template)]
+#[template(path = "interface.html.jinja2")]
 pub struct DocumentStructure {
     namepath: Vec<String>,
     name: String,
@@ -6,25 +9,36 @@ pub struct DocumentStructure {
     summary: String,
 }
 
-
-impl DocumentStructure {
-    pub fn new<S: ToString>(name: S) -> Self {
-        Self {
-            namepath: vec![],
-            name: name.to_string(),
-            summary: "".to_string(),
-        }
+impl PagedElement for DocumentStructure {
+    fn new<S: ToString>(name: S) -> Self {
+        Self { namepath: vec![], name: name.to_string(), summary: "".to_string() }
     }
-    pub fn get_name(&self) -> &str {
+
+    fn get_kind(&self) -> &'static str {
+        "Structure"
+    }
+
+    fn get_name(&self) -> &str {
         &self.name
     }
-    pub fn get_summary(&self) -> &str {
+
+    fn get_namespace(&self) -> &[String] {
+        &self.namepath
+    }
+
+    fn set_namespace(&mut self, namepath: Vec<String>) {
+        self.namepath = namepath;
+    }
+
+    fn get_summary(&self) -> &str {
         &self.summary
     }
-    pub fn with_summary<S: ToString>(self, summary: S) -> Self {
-        Self {
-            summary: summary.to_string(),
-            ..self
-        }
+
+    fn set_summary<S: ToString>(&mut self, summary: S) {
+        self.summary = summary.to_string();
+    }
+
+    fn href_class(&self) -> &'static str {
+        "type-structure"
     }
 }

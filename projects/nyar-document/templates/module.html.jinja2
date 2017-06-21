@@ -1,8 +1,8 @@
 <h1>Module <a href="../../index.html">std</a>::<wbr><a href="../index.html">files</a>::<wbr><a class="mod"
         href="#">filters</a>
-    <button id="copy-path" title="Copy item path to clipboard">
+    {# <button id="copy-path" title="Copy item path to clipboard">
         <img src="/-/rustdoc.static/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path">
-    </button>
+    </button> #}
 </h1>
 
 {{ self.summary }}
@@ -16,7 +16,7 @@
 {% for module in modules %}
 <li>
     <div class="item-name">
-        <a class="type-module" href="filters/index.html" title="modio::comments::filters">{{ module.name }}</a>
+        <a class="type-module" href="{{ module.href_in_module() }}" title="modio::comments::filters">{{ module.name }}</a>
     </div>
     <div class="desc docblock-short">{{ module.summary }}</div>
 </li>
@@ -32,14 +32,14 @@
     <a href="#interfaces">Interfaces</a>
 </h2>
 <ul class="item-table"></ul>
-{% for interface in interfaces %}
+{% for child in interfaces %}
 <li>
     <div class="item-name">
-        <a class="type-interface" href="filters/index.html" title="modio::comments::filters">
-            {{ interface.get_name() }}
+        <a class="{{ child.href_class() }}" href="{{ child.href_in_module() }}" title="{{ child.href_title() }}">
+            {{ child.get_name() }}
         </a>
     </div>
-    <div class="desc docblock-short">{{ interface.get_summary() }}</div>
+    <div class="desc docblock-short">{{ child.get_summary() }}</div>
 </li>
 {% endfor %}
 </ul>
@@ -53,14 +53,14 @@
     <a href="#structures">Structures</a>
 </h2>
 <ul class="item-table"></ul>
-{% for structure in structures %}
+{% for child in structures %}
 <li>
     <div class="item-name">
-        <a class="type-structure" href="filters/index.html" title="modio::comments::filters">
-            {{ structure.get_name() }}
+        <a class="{{ child.href_class() }}" href="{{ child.href_in_module() }}" title="{{ child.href_title() }}">
+            {{ child.get_name() }}
         </a>
     </div>
-    <div class="desc docblock-short">{{ structure.get_summary() }}</div>
+    <div class="desc docblock-short">{{ child.get_summary() }}</div>
 </li>
 {% endfor %}
 </ul>

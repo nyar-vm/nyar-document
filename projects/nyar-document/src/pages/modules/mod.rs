@@ -1,8 +1,4 @@
-use std::ops::AddAssign;
-use std::sync::Arc;
-use askama::Template;
-use crate::{DocumentInterface, DocumentStructure, DocumentType};
-use crate::traits::PagedElement;
+use super::*;
 
 #[derive(Debug, Template)]
 #[template(path = "module.html.jinja2")]
@@ -17,8 +13,7 @@ pub struct DocumentModule {
     structures: Vec<Arc<DocumentStructure>>,
 }
 
-impl PagedElement for DocumentModule
-{
+impl PagedElement for DocumentModule {
     fn new<S: ToString>(name: S) -> Self {
         Self {
             namespace: vec![],
@@ -31,8 +26,8 @@ impl PagedElement for DocumentModule
         }
     }
 
-    fn set_summary<S: ToString>(&mut self, summary: S) {
-        self.summary = summary.to_string()
+    fn get_kind(&self) -> &'static str {
+        "Module"
     }
 
     fn get_name(&self) -> &str {
@@ -49,6 +44,25 @@ impl PagedElement for DocumentModule
 
     fn get_summary(&self) -> &str {
         self.summary.as_str()
+    }
+
+    fn set_summary<S: ToString>(&mut self, summary: S) {
+        self.summary = summary.to_string()
+    }
+
+    fn href_in_module(&self) -> String {
+        format!("./{}/index.html", self.name)
+    }
+
+    fn href_class(&self) -> &'static str {
+        "type-module"
+    }
+
+    fn html_file<P: AsRef<Path>>(&self, root: P) -> std::io::Result<File> {
+        let mut path = self.html_directory(root).join(&self.name);
+        std::fs::create_dir_all(&path)?;
+        path.push("index.html");
+        File::create(&path)
     }
 }
 
@@ -70,12 +84,11 @@ impl AddAssign<Arc<DocumentModule>> for DocumentModule {
     }
 }
 
-impl AddAssign<DocumentInterface> for DocumentModule {
-    fn add_assign(&mut self, rhs: DocumentInterface) {
-        self.interfaces.push(Arc::new(rhs));
+impl AddAssign<Arc<DocumentInterface>> for DocumentModule {
+    fn add_assign(&mut self, rhs: Arc<DocumentInterface>) {
+        self.interfaces.push(rhs);
     }
 }
-
 
 impl AddAssign<Arc<DocumentStructure>> for DocumentModule {
     fn add_assign(&mut self, rhs: Arc<DocumentStructure>) {
