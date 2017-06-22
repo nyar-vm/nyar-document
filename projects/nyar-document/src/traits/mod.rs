@@ -7,28 +7,34 @@ use std::{
 pub trait PagedElement {
     /// Create a new element
     fn new<S: ToString>(name: S) -> Self;
-
-    fn get_kind(&self) -> &'static str;
-
+    /// Get the kind of the element
+    fn get_kind(&self, plural: bool) -> &'static str;
     /// Get the name of the element
     fn get_name(&self) -> &str;
     /// Get the namespace of the element
     fn get_namespace(&self) -> &[String];
     /// Set the namespace of the element
     fn set_namespace(&mut self, namepath: Vec<String>);
+    /// Get the name path of the element
+    fn get_name_path(&self) -> String {
+        self.get_namespace().join("::") + "::" + self.get_name()
+    }
+
     /// Get the summary of the element
     fn get_summary(&self) -> &str;
     /// Set the summary of the element
     fn set_summary<S: ToString>(&mut self, summary: S);
+    /// Get the href of the element
     fn href_in_module(&self) -> String {
         format!("./{}.html", self.get_name())
     }
-    fn href_class(&self) -> &'static str;
-    fn href_title(&self) -> String {
-        self.get_namespace().join("::") + "::" + self.get_name()
+    /// Get the href class of the element
+    fn href_class(&self) -> String {
+        format!("token-{}", self.get_kind(false))
     }
+    /// Get the href of the element
     fn href_head(&self) -> String {
-        let mut head = self.get_kind().to_string();
+        let mut head = self.get_kind(true).to_string();
         head.push(' ');
         let heads = self.get_namespace().len().saturating_sub(1);
         for (i, name) in self.get_namespace().iter().enumerate() {

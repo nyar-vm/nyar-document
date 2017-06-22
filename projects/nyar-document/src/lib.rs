@@ -9,11 +9,11 @@ mod errors;
 mod pages;
 mod traits;
 
-pub use crate::errors::{Error, Result};
-pub use crate::pages::modules::{DocumentModule};
-pub use crate::pages::types::{DocumentType};
-pub use crate::pages::interfaces::{DocumentInterface};
-pub use crate::pages::structures::{DocumentStructure};
-pub use crate::traits::PagedElement;
-
-pub use crate::pages::PagesManager;
+pub use crate::{
+    errors::{DocumentError, DocumentErrorKind, DocumentResult},
+    pages::{
+        interfaces::DocumentInterface, modules::DocumentModule, structures::DocumentStructure, types::DocumentType,
+        PagesManager,
+    },
+    traits::PagedElement,
+};

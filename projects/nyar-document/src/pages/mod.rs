@@ -1,69 +1,81 @@
-use crate::{DocumentInterface, DocumentModule, DocumentStructure, DocumentType, PagedElement};
-use askama::Template;
-use dashmap::DashMap;
-use std::{
-    fmt::format,
-    fs::File,
-    io::Write,
-    ops::AddAssign,
-    path::{Path, PathBuf},
-    sync::Arc,
-};
+use crate::{DocumentInterface, DocumentModule, DocumentResult, DocumentStructure, DocumentType, PagedElement};
 
-mod enumerations;
-mod flags;
+use semver::Version;
+use std::{collections::HashMap, fs::File, io::Write, ops::AddAssign, path::Path, sync::Arc};
+
+pub mod enumerations;
+pub mod flags;
 pub mod interfaces;
 pub mod modules;
 pub mod structures;
 pub mod types;
-mod unions;
-mod unites;
-mod variants;
+pub mod unions;
+pub mod unites;
+pub mod variants;
 
 #[derive(Debug, Default)]
 pub struct PagesManager {
-    modules: DashMap<String, Arc<DocumentModule>>,
-    types: Vec<Arc<DocumentType>>,
-    interfaces: DashMap<String, Arc<DocumentInterface>>,
-    structures: DashMap<String, Arc<DocumentStructure>>,
+    version: Option<Version>,
+    modules: HashMap<String, DocumentModule>,
+    types: HashMap<String, DocumentType>,
+    interfaces: HashMap<String, DocumentInterface>,
+    structures: HashMap<String, DocumentStructure>,
 }
 
 impl PagesManager {
-    /// Create a new PagesManager
-    pub fn register_module(&mut self, module: DocumentModule) -> Arc<DocumentModule> {
-        let module = Arc::new(module);
-        self.modules.insert(module.get_name().to_string(), module.clone());
-        module
+    pub fn get_module(&self, name: &str) -> Option<&DocumentModule> {
+        self.modules.get(name)
     }
     /// Create a new PagesManager
-    pub fn register_interface(&mut self, interface: DocumentInterface) -> Arc<DocumentInterface> {
-        let interface = Arc::new(interface);
-        self.interfaces.insert(interface.get_name().to_string(), interface.clone());
-        interface
+    pub fn add_module(&mut self, module: DocumentModule) -> String {
+        let key = module.get_name_path();
+        self.modules.insert(key.clone(), module);
+        key
     }
-    pub fn register_structure(&mut self, structure: DocumentStructure) -> Arc<DocumentStructure> {
-        let structure = Arc::new(structure);
-        self.structures.insert(structure.get_name().to_string(), structure.clone());
-        structure
+    /// Create a new PagesManager
+    pub fn add_interface(&mut self, interface: DocumentInterface) -> String {
+        let key = interface.get_name_path();
+        self.interfaces.insert(key.clone(), interface);
+        key
+    }
+    pub fn add_structure(&mut self, structure: DocumentStructure) -> String {
+        let key = structure.get_name_path();
+        self.structures.insert(key.clone(), structure);
+        key
+    }
+    pub fn add_type(&mut self, structure: DocumentType) -> String {
+        let key = structure.get_name_path();
+        self.types.insert(key.clone(), structure);
+        key
     }
 
-    /// Create a new PagesManager
-    pub fn export<P: AsRef<Path>>(&self, root: P) -> std::io::Result<()> {
-        for item in self.modules.iter() {
-            let mut file = item.value().html_file(root.as_ref())?;
-            let html = item.value().render().unwrap();
-            file.write_all(html.as_bytes())?;
-        }
-        for item in self.interfaces.iter() {
-            let mut file = item.value().html_file(root.as_ref())?;
-            let html = item.value().render().unwrap();
-            file.write_all(html.as_bytes())?;
-        }
-        for item in self.structures.iter() {
-            let mut file = item.value().html_file(root.as_ref())?;
-            let html = item.value().render().unwrap();
-            file.write_all(html.as_bytes())?;
-        }
+    /// Create pseudo-static html pages for all registered items
+    pub fn return_html(&self, query: &str) -> DocumentResult<String> {
+        todo!()
+        // if let Some(s) = self.modules.get(query) {
+        //     return Ok(s.render().unwrap());
+        // }
+        // Ok("".to_string())
+    }
+    /// Create static html pages for all registered items
+    pub fn export_html<P: AsRef<Path>>(&self, root: P) -> std::io::Result<()> {
+        // TODO: Make this parallel
+        // for item in self.modules.values() {
+        //     let mut file = item.html_file(root.as_ref())?;
+        //     let html = item.render().unwrap();
+        //     file.write_all(html.as_bytes())?;
+        // }
+        // for item in self.interfaces.values() {
+        //     let mut file = item.html_file(root.as_ref())?;
+        //     let html = item.render().unwrap();
+        //     file.write_all(html.as_bytes())?;
+        // }
+        // for item in self.structures.values() {
+        //     let mut file = item.html_file(root.as_ref())?;
+        //     let html = item.render().unwrap();
+        //     file.write_all(html.as_bytes())?;
+        // }
+        todo!();
         Ok(())
     }
 }

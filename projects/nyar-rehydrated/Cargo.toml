@@ -1,5 +1,5 @@
 [package]
-name = "nyar-document"
+name = "nyar-document-ssr"
 version = "0.0.0"
 authors = ["Aster <192607617@qq.com>"]
 description = "Nyar document builder"
@@ -12,6 +12,7 @@ exclude = ["package.json", "tests/**"]
 
 [dependencies]
 semver = "1.0.17"
+axum = "0.6.18"
 dioxus = "0.3.2"
 dioxus-web = "0.3.2"
 dioxus-ssr = "0.3.0"

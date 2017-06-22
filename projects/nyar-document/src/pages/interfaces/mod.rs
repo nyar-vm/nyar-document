@@ -1,7 +1,6 @@
 use super::*;
 
-#[derive(Debug, Template)]
-#[template(path = "interface.html.jinja2")]
+#[derive(Debug)]
 pub struct DocumentInterface {
     namepath: Vec<String>,
     name: String,
@@ -14,7 +13,7 @@ impl PagedElement for DocumentInterface {
         Self { namepath: vec![], name: name.to_string(), summary: "".to_string() }
     }
 
-    fn get_kind(&self) -> &'static str {
+    fn get_kind(&self, plural: bool) -> &'static str {
         "Interface"
     }
 
@@ -36,10 +35,6 @@ impl PagedElement for DocumentInterface {
 
     fn set_summary<S: ToString>(&mut self, summary: S) {
         self.summary = summary.to_string();
-    }
-
-    fn href_class(&self) -> &'static str {
-        "type-interface"
     }
 }
 // Interface <a href="../../index.html">std</a>::<wbr><a href="../index.html">io</a>::<wbr><a class="type-interface" href="#Self">filters</a>

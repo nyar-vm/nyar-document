@@ -13,12 +13,14 @@
     <a href="#modules">Modules</a>
 </h2>
 <ul class="item-table"></ul>
-{% for module in modules %}
+{% for child in self.render_modules(store) %}
 <li>
     <div class="item-name">
-        <a class="type-module" href="{{ module.href_in_module() }}" title="modio::comments::filters">{{ module.name }}</a>
+        <a class="{{ child.href_class() }}" href="{{ child.href_in_module() }}" title="{{ child.get_name_path() }}">
+            {{ child.get_name() }}
+        </a>
     </div>
-    <div class="desc docblock-short">{{ module.summary }}</div>
+    <div class="desc docblock-short">{{ child.get_summary() }}</div>
 </li>
 {% endfor %}
 </ul>
@@ -35,7 +37,7 @@
 {% for child in interfaces %}
 <li>
     <div class="item-name">
-        <a class="{{ child.href_class() }}" href="{{ child.href_in_module() }}" title="{{ child.href_title() }}">
+        <a class="{{ child.href_class() }}" href="{{ child.href_in_module() }}" title="{{ child.get_name_path() }}">
             {{ child.get_name() }}
         </a>
     </div>
@@ -45,6 +47,24 @@
 </ul>
 {% endif %}
 
+
+{% if self.has_type() %}
+<h2 id="structures" class="small-section-header">
+    <a href="#structures">Tyes</a>
+</h2>
+<ul class="item-table"></ul>
+{% for child in types %}
+<li>
+    <div class="item-name">
+        <a class="{{ child.href_class() }}" href="{{ child.href_in_module() }}" title="{{ child.get_name_path() }}">
+            {{ child.get_name() }}
+        </a>
+    </div>
+    <div class="desc docblock-short">{{ child.get_summary() }}</div>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
 
 
 
@@ -56,7 +76,7 @@
 {% for child in structures %}
 <li>
     <div class="item-name">
-        <a class="{{ child.href_class() }}" href="{{ child.href_in_module() }}" title="{{ child.href_title() }}">
+        <a class="{{ child.href_class() }}" href="{{ child.href_in_module() }}" title="{{ child.get_name_path() }}">
             {{ child.get_name() }}
         </a>
     </div>
@@ -65,6 +85,7 @@
 {% endfor %}
 </ul>
 {% endif %}
+
 
 <style>
     table,
@@ -90,19 +111,19 @@
         padding-right: 1.25rem;
     }
 
-    .type {
+    .token-type {
         color: #E2931D;
     }
 
-    .type-module {
+    .token-module {
         color: #4078F2;
     }
 
-    .type-structure {
+    .token-structure {
         color: #E2931D;
     }
 
-    .type-interface {
+    .token-interface {
         color: #50A14E;
 
     }
