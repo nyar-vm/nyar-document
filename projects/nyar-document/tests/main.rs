@@ -42,6 +42,4 @@ fn main() {
     // io += mmg.add_structure(s1);
 
     mmg.add_module(io);
-
-    mmg.export_html("target").unwrap();
 }

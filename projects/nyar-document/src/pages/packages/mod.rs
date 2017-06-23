@@ -1,5 +1,4 @@
 use super::*;
-use std::collections::BTreeMap;
 
 #[derive(Clone, Debug, PartialEq, Props)]
 pub struct PackageContext {
@@ -28,14 +27,13 @@ impl PackageContext {
     }
     pub fn as_module_link(&self) -> LazyNodes {
         let pkg = self.package.as_str();
-        let mut query =
-            if self.version.is_empty() { "?version=latest".to_string() } else { format!("?version={}", self.version) };
-        if !self.language.is_empty() {
-            query.push_str(&format!("&language={}", self.language));
-        }
+        let query = if self.version.is_empty() { "?version=latest".to_string() } else { format!("?version={}", self.version) };
+        // if !self.language.is_empty() {
+        //     query.push_str(&format!("&language={}", self.language));
+        // }
         rsx! {
             a {
-                href: "/packages/{pkg}{query}",
+                href: "{pkg}/{pkg}/{query}",
                 "{pkg}"
             }
         }
@@ -56,8 +54,16 @@ pub fn PackagePage(cx: Scope<PackageContext>) -> Element {
     let version = cx.props.version.as_str();
     let language = cx.props.language.as_str();
     // let module = cx.props.modules.join("::");
-
+    let container = css!(
+        "
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+    "
+    );
     cx.render(rsx!(div {
+        class: "{container}",
         "hello package"
         div {
             cx.props.as_module_link()

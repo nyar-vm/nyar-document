@@ -10,5 +10,6 @@ time-travel.*
 *.iml
 
 # Rust
+dist/
 target/
 Cargo.lock
