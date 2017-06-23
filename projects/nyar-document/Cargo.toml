@@ -13,10 +13,7 @@ exclude = ["package.json", "tests/**"]
 [dependencies]
 semver = "1.0.17"
 dioxus = "0.3.2"
-dioxus-web = "0.3.2"
-dioxus-ssr = "0.3.0"
-tokio = { version = "1.15.0", features = ["full"] }
-
+serde = { version = "1.0.163", features = ["derive"] }
 
 [dev-dependencies]
 

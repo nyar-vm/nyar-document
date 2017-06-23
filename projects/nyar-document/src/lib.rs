@@ -12,7 +12,11 @@ mod traits;
 pub use crate::{
     errors::{DocumentError, DocumentErrorKind, DocumentResult},
     pages::{
-        interfaces::DocumentInterface, modules::DocumentModule, structures::DocumentStructure, types::DocumentType,
+        interfaces::DocumentInterface,
+        modules::DocumentModule,
+        packages::{PackageContext, PackagePage, PackageQuery},
+        structures::DocumentStructure,
+        types::DocumentType,
         PagesManager,
     },
     traits::PagedElement,

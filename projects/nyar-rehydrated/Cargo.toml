@@ -13,11 +13,15 @@ exclude = ["package.json", "tests/**"]
 [dependencies]
 semver = "1.0.17"
 axum = "0.6.18"
+serde = { version = "1.0.163", features = ["derive"] }
 dioxus = "0.3.2"
 dioxus-web = "0.3.2"
 dioxus-ssr = "0.3.0"
 tokio = { version = "1.15.0", features = ["full"] }
 
+[dependencies.nyar-document]
+version = "0.0.0"
+path = "../nyar-document"
 
 [dev-dependencies]
 

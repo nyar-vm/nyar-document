@@ -1,12 +1,22 @@
+#![allow(non_snake_case)]
 use crate::{DocumentInterface, DocumentModule, DocumentResult, DocumentStructure, DocumentType, PagedElement};
-
+use dioxus::prelude::*;
 use semver::Version;
-use std::{collections::HashMap, fs::File, io::Write, ops::AddAssign, path::Path, sync::Arc};
+use serde::Deserialize;
+use std::{
+    collections::HashMap,
+    fs::File,
+    io::Write,
+    ops::{Add, AddAssign},
+    path::Path,
+    sync::Arc,
+};
 
 pub mod enumerations;
 pub mod flags;
 pub mod interfaces;
 pub mod modules;
+pub mod packages;
 pub mod structures;
 pub mod types;
 pub mod unions;
